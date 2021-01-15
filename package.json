@@ -1,0 +1,58 @@
+{
+  "name": "@buibis/buibis-version",
+  "version": "0.0.1",
+  "description": "git version npm changelog",
+  "main": "index.js",
+  "bin": {
+    "buibis-version": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "tsc && node './bin/index.js' -pp",
+    "codecheck": "npm run eslint && npm run checkCodeStyle",
+    "eslint": "eslint './src/**/*.{ts,js}'",
+    "checkCodeStyle": "prettier --check './*/**'"
+  },
+  "engines": {
+    "node": "^10.12.0 || >=12.0.0"
+  },
+  "files": [
+    "bin"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run codecheck",
+      "commit-msg": "cross-env-shell \"commitlint -e $HUSKY_GIT_PARAMS\""
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zqinmiao/buibis-version.git"
+  },
+  "keywords": [
+    "git",
+    "version",
+    "npm",
+    "changelog"
+  ],
+  "author": "reahink",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zqinmiao/buibis-version/issues"
+  },
+  "homepage": "https://github.com/zqinmiao/buibis-version#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^6.2.1",
+    "conventional-changelog-cli": "^2.1.1",
+    "prompts": "^2.4.0",
+    "semver": "^7.3.4",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "@buibis/code-config": "0.0.10",
+    "@types/commander": "^2.12.2",
+    "@types/node": "^14.14.21",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
