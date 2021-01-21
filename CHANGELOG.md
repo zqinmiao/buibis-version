@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/zqinmiao/buibis-version/compare/v0.0.4...v0.0.5) (2021-01-21)
+
+
+### Features
+
+* 优化代码 ([1b6dd25](https://github.com/zqinmiao/buibis-version/commit/1b6dd25a948cda46ac38ffefd4c81558a262f07a))
+
+
+
 ## 0.0.4 (2021-01-21)
 
 ### Bug Fixes
