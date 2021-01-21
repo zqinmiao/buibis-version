@@ -50,19 +50,24 @@ async function updateVersion(): Promise<void> {
   currentVersion = `${response.value}`;
 
   // 更改版本号
-  const child = shell.exec(`npm version ${currentVersion} -m "chore(release): ${currentVersion}"`);
+  const child = shell.exec(`npm --no-git-tag-version --no-git-commit-version version ${currentVersion}`);
   if (child.code >= 1) {
     process.exit(1);
   }
   return Promise.resolve();
 }
 
-async function generateChangelog() {
+async function generateChangelog(tag?: boolean) {
   console.log(colors.green("开始生成 CHANGELOG.md"));
   // 生成changelog，并与上次的git commit合并
   shell.exec(`npx conventional-changelog -p angular -i CHANGELOG.md -s -r`);
-  shell.exec(`git add CHANGELOG.md`);
-  shell.exec(`git commit --amend --no-edit`);
+
+  // 需要打tag
+  if (tag) {
+    shell.exec(`git add .`);
+    shell.exec(`git commit -m "chore(release): ${currentVersion}"`);
+    shell.exec(`git tag -a v${currentVersion} -m "release: ${currentVersion}"`);
+  }
 }
 
 // 当前的registry
@@ -101,7 +106,7 @@ async function publish(target: string) {
 export const publishNpm = async (target: string): Promise<void> => {
   packageJson = require(`${process.cwd()}${target}package.json`);
   return updateVersion()
-    .then(() => generateChangelog())
+    .then(() => generateChangelog(true))
     .then(() => publish(target))
     .then(() => changeNpmRegistry(true))
     .then(() => {
@@ -112,7 +117,7 @@ export const publishNpm = async (target: string): Promise<void> => {
 export const publishNpmGit = async (target: string): Promise<void> => {
   packageJson = require(`${process.cwd()}${target}package.json`);
   return updateVersion()
-    .then(() => generateChangelog())
+    .then(() => generateChangelog(true))
     .then(() => publish(target))
     .then(() => changeNpmRegistry(true))
     .then(() => pushGit())
@@ -124,11 +129,8 @@ export const publishNpmGit = async (target: string): Promise<void> => {
 export const changelog = async (target: string, options?: { tag: boolean }): Promise<void> => {
   packageJson = require(`${process.cwd()}${target}package.json`);
   return updateVersion()
-    .then(() => generateChangelog())
+    .then(() => generateChangelog(options?.tag))
     .then(() => {
-      if (options?.tag) {
-        shell.exec(`git tag -a v${currentVersion} -m "release: ${currentVersion}"`);
-      }
       process.exit(0);
     });
 };
