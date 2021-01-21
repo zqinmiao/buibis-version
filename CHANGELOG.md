@@ -1,3 +1,12 @@
+## [0.0.7](https://github.com/zqinmiao/buibis-version/compare/v0.0.6...v0.0.7) (2021-01-21)
+
+
+### Features
+
+* 优化提示 ([62507ec](https://github.com/zqinmiao/buibis-version/commit/62507ec0b8896cdf859861567815eeb09251cee8))
+
+
+
 ## [0.0.6](https://github.com/zqinmiao/buibis-version/compare/v0.0.5...v0.0.6) (2021-01-21)
 
 

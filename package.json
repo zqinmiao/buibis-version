@@ -1,6 +1,6 @@
 {
   "name": "@buibis/buibis-version",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "git version npm changelog",
   "main": "index.js",
   "bin": {
