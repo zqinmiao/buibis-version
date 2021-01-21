@@ -13,7 +13,6 @@ let currentVersion = `${packageJson.version}`;
  */
 async function pushGit() {
   console.log(colors.green("\n开始发布至 Git"));
-  shell.exec(`git tag -a v${currentVersion} -m "release: ${currentVersion}"`);
   shell.exec(`git push origin v${currentVersion}`);
   shell.exec(`git push`);
 }
