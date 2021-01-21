@@ -1,3 +1,18 @@
+## 0.0.4 (2021-01-21)
+
+
+### Bug Fixes
+
+* 修复bug ([b3538bd](https://github.com/zqinmiao/buibis-version/commit/b3538bda3f4df6baf95cbf2bc98d2288c6b7cb95))
+
+
+### Features
+
+* 修改命令 ([644b528](https://github.com/zqinmiao/buibis-version/commit/644b5282a6a04d9ca4bb598c4f81e707961ee4f5))
+* 做了一些优化 ([c350e9b](https://github.com/zqinmiao/buibis-version/commit/c350e9b967802eb208f651087172019e35a874fd))
+
+
+
 ## 0.0.2 (2021-01-21)
 
 
