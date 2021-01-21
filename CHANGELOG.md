@@ -1,3 +1,12 @@
+## [0.0.6](https://github.com/zqinmiao/buibis-version/compare/v0.0.5...v0.0.6) (2021-01-21)
+
+
+### Bug Fixes
+
+* 重复打tag ([209cd7a](https://github.com/zqinmiao/buibis-version/commit/209cd7a1192fdf61d9550258183f77981dfced4e))
+
+
+
 ## [0.0.5](https://github.com/zqinmiao/buibis-version/compare/v0.0.4...v0.0.5) (2021-01-21)
 
 
