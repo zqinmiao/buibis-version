@@ -15,35 +15,37 @@ npm i --save-dev @buibis/buibis-version
 ```javascript
 {
   "scripts": {
-    "release": "buibis-version -p"
+    "release": "buibis-version -r"
   }
 }
 ```
 
 ## CLI 使用
 
+> 如果是 scope 包，如：`@buibis/buibis-version`，以`@buibis`开头，请先使用`npm publish --access public`，提交第一个版本。
+
 ```bash
 # 自动化发布npm包
-buibis-version -p
+buibis-version -release
 # 自动化发布npm包并提交git
-buibis-version -pp
+buibis-version -p
 # 自动更新版本并生CHANGELOG.md
-buibis-version -ch
+buibis-version -log
 ```
 
 ### 配置
 
 ```bash
---publish [target]       自动化发布npm包
+--release [target]       自动化发布npm包
           [target]       目标目录
---pp [target]            自动化发布npm包并提交git
-     [target]            目标目录
+--publish [target]            自动化发布npm包并提交git
 --changelog [target]     自动更新版本并生CHANGELOG.md
-            [target]     目标目录
+--changelogTag [target]  自动更新版本并生CHANGELOG.md，并打tag
 ```
 
+#### changelog 支持的 commit 类型：
+
 ```bash
-# changelog支持的commit类型：
 "types": [
     {"type": "feat", "section": "Features"},
     {"type": "fix", "section": "Bug Fixes"},

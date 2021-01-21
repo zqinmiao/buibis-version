@@ -60,7 +60,7 @@ async function updateVersion(): Promise<void> {
 async function generateChangelog() {
   console.log(colors.green("开始生成 CHANGELOG.md"));
   // 生成changelog，并与上次的git commit合并
-  shell.exec(`npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0`);
+  shell.exec(`npx conventional-changelog -p angular -i CHANGELOG.md -s -r`);
   shell.exec(`git add CHANGELOG.md`);
   shell.exec(`git commit --amend --no-edit`);
 }
@@ -86,7 +86,7 @@ async function changeNpmRegistry(reset?: boolean) {
 
 // 发布到npm
 async function publish(target: string) {
-  console.log(colors.green("开始发布至 npm"));
+  console.log(colors.green("\n开始发布至 npm"));
   return changeNpmRegistry().then(() => {
     // shell.exec(`npm pack .${target}`);
     const child = shell.exec(`npm publish .${target}`);
@@ -121,11 +121,14 @@ export const publishNpmGit = async (target: string): Promise<void> => {
     });
 };
 
-export const changelog = async (target: string): Promise<void> => {
+export const changelog = async (target: string, options?: { tag: boolean }): Promise<void> => {
   packageJson = require(`${process.cwd()}${target}package.json`);
   return updateVersion()
     .then(() => generateChangelog())
     .then(() => {
+      if (options?.tag) {
+        shell.exec(`git tag -a v${currentVersion} -m "release: ${currentVersion}"`);
+      }
       process.exit(0);
     });
 };

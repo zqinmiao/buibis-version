@@ -7,7 +7,7 @@
     "buibis-version": "./bin/index.js"
   },
   "scripts": {
-    "build": "tsc && node './bin/index.js' -pp",
+    "build": "tsc && node './bin/index.js' -p",
     "codecheck": "npm run eslint && npm run checkCodeStyle",
     "eslint": "eslint './src/**/*.{ts,js}'",
     "checkCodeStyle": "prettier --check './*/**'"
