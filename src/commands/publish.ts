@@ -12,7 +12,7 @@ let currentVersion = `${packageJson.version}`;
  * 将当前版本作为一个新标签提交至远程仓库
  */
 async function pushGit() {
-  console.log(colors.green("\n开始发布至 Git"));
+  console.log(colors.green("\n开始提交至 Git"));
   shell.exec(`git push origin v${currentVersion}`);
   shell.exec(`git push`);
 }
