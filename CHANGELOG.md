@@ -1,3 +1,12 @@
+## [0.0.8](https://github.com/zqinmiao/buibis-version/compare/v0.0.7...v0.0.8) (2021-02-19)
+
+
+### Features
+
+* 新增选项--registry、--sync ([8144057](https://github.com/zqinmiao/buibis-version/commit/8144057c51b6c939bbed13b90a4ddbfc32cfe59e))
+
+
+
 ## [0.0.7](https://github.com/zqinmiao/buibis-version/compare/v0.0.6...v0.0.7) (2021-01-21)
 
 
