@@ -26,8 +26,13 @@ async function updateVersion(): Promise<void> {
     name: "value",
     message: `当前版本「${colors.green(packageJson.version)}」\n请输入新的版本号，语义化版本号请参考：${colors.blue(
       "https://semver.org/lang/zh-CN/",
-    )}\n版本号(跳过按回车)：`,
+    )}\n版本号(跳过按回车,退出输入q)：`,
   });
+
+  // 退出
+  if (response.value === "q") {
+    process.exit(0);
+  }
 
   // 跳过版本号输入
   if (!response.value) {
@@ -76,6 +81,7 @@ let currentRegistry = "";
  * 更改npm registry
  * @param reset 重置回之前的registry
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function changeNpmRegistry(reset?: boolean) {
   if (reset) {
     return shell.exec(`npm config set registry=${currentRegistry}`);
@@ -91,15 +97,12 @@ async function changeNpmRegistry(reset?: boolean) {
 // 发布到npm
 async function publish(target: string) {
   console.log(colors.green("\n开始发布至 npm"));
-  return changeNpmRegistry().then(() => {
-    // shell.exec(`npm pack .${target}`);
-    const child = shell.exec(`npm publish .${target}`);
+  // shell.exec(`npm pack .${target}`);
+  const child = shell.exec(`npm publish .${target}`);
 
-    if (child.code >= 1) {
-      process.exit(1);
-    }
-    shell.exec(`curl -X PUT https://npm.taobao.org/sync/${packageJson.name}`);
-  });
+  if (child.code >= 1) {
+    process.exit(1);
+  }
 }
 
 export const publishNpm = async (target: string): Promise<void> => {
@@ -107,7 +110,6 @@ export const publishNpm = async (target: string): Promise<void> => {
   return updateVersion()
     .then(() => generateChangelog(true))
     .then(() => publish(target))
-    .then(() => changeNpmRegistry(true))
     .then(() => {
       process.exit(0);
     });
@@ -118,7 +120,6 @@ export const publishNpmGit = async (target: string): Promise<void> => {
   return updateVersion()
     .then(() => generateChangelog(true))
     .then(() => publish(target))
-    .then(() => changeNpmRegistry(true))
     .then(() => pushGit())
     .then(() => {
       process.exit(0);
