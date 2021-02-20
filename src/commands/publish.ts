@@ -1,7 +1,7 @@
 const shell = require("shelljs");
-const prompts = require("prompts");
 const colors = require("colors");
 const semver = require("semver");
+import { prompt } from "inquirer";
 
 let packageJson = require("../../package.json");
 
@@ -21,37 +21,34 @@ async function pushGit() {
  * 更新版本号
  */
 async function updateVersion(): Promise<void> {
-  const response = await prompts({
-    type: "text",
-    name: "value",
-    message: `当前版本「${colors.green(packageJson.version)}」\n请输入新的版本号，语义化版本号请参考：${colors.blue(
-      "https://semver.org/lang/zh-CN/",
-    )}\n版本号(跳过按回车,退出输入q)：`,
-  });
-
-  // 退出
-  if (response.value === "q") {
-    process.exit(0);
-  }
+  const { version } = await prompt([
+    {
+      type: "input",
+      name: "version",
+      message: `当前版本「${colors.green(packageJson.version)}」\n请输入新的版本号，语义化版本号请参考：${colors.blue(
+        "https://semver.org/lang/zh-CN/",
+      )}\n版本号(跳过按回车)：`,
+    },
+  ]);
 
   // 跳过版本号输入
-  if (!response.value) {
+  if (!version) {
     currentVersion = `${packageJson.version}`;
     return Promise.resolve();
   }
 
   // 校验版本号格式
-  if (!semver.valid(response.value)) {
+  if (!semver.valid(version)) {
     console.log(colors.red("版本号格式错误，请重新输入"));
     return await updateVersion();
   }
 
-  if (packageJson.version === response.value) {
+  if (packageJson.version === version) {
     console.log(colors.red("版本号已存在，请重新输入"));
     return await updateVersion();
   }
 
-  currentVersion = `${response.value}`;
+  currentVersion = `${version}`;
 
   // 更改版本号
   const child = shell.exec(`npm --no-git-tag-version --no-git-commit-version version ${currentVersion}`);
